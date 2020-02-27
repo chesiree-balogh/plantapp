@@ -14,13 +14,17 @@ namespace plantapp
       var isRunning = true;
       while (isRunning)
       {
-        Console.WriteLine($"Which would you like to do with your plants? (V)iew, (A)dd, (R)emove, (W)atered date, (N)eeds water, (L)ocation or (Quit)?");
+        Console.WriteLine($"Which would you like to do with your plants? (V)iew, (A)dd, (R)emove, (W)atered date, (N)eeds water, (L)ocation or (Q)uit?");
         var input = Console.ReadLine().ToLower();
 
         //Plant Species 
         if (input == "v")
         {
-
+          var viewCurrentPlants = db.Plants.OrderBy(p => p.LocatedPlant == "");
+          foreach (var plant in viewCurrentPlants)
+          {
+            Console.WriteLine($" Your {plant.Species} is planted at/in {plant.LocatedPlant}.");
+          }
         }
 
 
@@ -56,25 +60,36 @@ namespace plantapp
         // }
 
 
-        // else if (input == "w")
-        // {
+        else if (input == "w")
+        {
 
-        // }
-
-
-        // else if (input == "n")
-        // {
-
-        // }
+        }
 
 
-        // else if (input == "l")
-        // {
+        else if (input == "n")
+        {
+          var plantsNeedWater = db.Plants.OrderBy(p => p.LastWaterDate);
+          foreach (var plant in plantsNeedWater)
+          {
+            Console.WriteLine($" Your {plant.Species} wasn't watered today.");
+          }
+        }
 
-        // }
+
+        else if (input == "l")
+        {
+          Console.WriteLine("From which location would you like to see your list of plants?");
+          var location = Console.ReadLine().ToLower();
+
+          var plantLocation = db.Plants.Where(p => p.LocatedPlant == location);
+          foreach (var plant in plantLocation)
+          {
+            Console.WriteLine($" Your {plant.Species} is planted in/at {plant.LocatedPlant}.");
+          }
+        }
 
 
-        else if (input == "quit")
+        else if (input == "q")
         {
           isRunning = false;
         }

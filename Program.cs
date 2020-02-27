@@ -49,20 +49,24 @@ namespace plantapp
         }
 
 
-        // else if (input == "r")
-        // {
-        //   Console.WriteLine($"Which plant Id would you like to remove?");
-        //   var removePlant = Console.ReadLine().ToLower();
-
-        //   var plantToDelete = db.Plants.First(plant => plant.Id == );
-        //   db.Plants.Remove(plantToDelete);
-        //   db.SaveChanges();
-        // }
+        else if (input == "r")
+        {
+          Console.WriteLine($"Which plant Id would you like to remove?");
+          var removePlant = int.Parse(Console.ReadLine());
+          var plantToRemove = db.Plants.FirstOrDefault(plant => plant.Id == removePlant);
+          db.Plants.Remove(plantToRemove);
+          db.SaveChanges();
+        }
 
 
         else if (input == "w")
         {
+          Console.WriteLine("Which plant ID would you like to water?");
 
+          var plantWater = int.Parse(Console.ReadLine());
+          var plantToWater = db.Plants.FirstOrDefault(plant => plant.Id == plantWater);
+          plantToWater.LastWaterDate = DateTime.Now;
+          db.SaveChanges();
         }
 
 
@@ -87,7 +91,6 @@ namespace plantapp
             Console.WriteLine($" Your {plant.Species} is planted in/at {plant.LocatedPlant}.");
           }
         }
-
 
         else if (input == "q")
         {
